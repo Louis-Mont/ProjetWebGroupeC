@@ -5,4 +5,22 @@
         <h1>Agence lorem ipsum<h1>
         <p></p>
     </div>
+
+    <div class="container">
+        <h2> Quelques doubles </h2>
+        <div class="row flex">
+            {% for double in doubles %}
+                <div class="col-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{{ path('double.show', {id: double.id, slug: double.slug}) }}">{{ double.number1 }} ; {{ double.number2 }}</a>
+                            </h5>
+                            <p class="card-text"> {% if double.askresult %} Oui {% else %} Non {% endif %}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

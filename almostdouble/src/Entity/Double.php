@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\DoubleRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Cocur\Slugify\Slugify;
 
 /**
  * @ORM\Entity(repositoryClass=DoubleRepository::class)
@@ -36,6 +37,11 @@ class Double
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getSlug() : string
+    {
+        return (new Slugify())->slugify("$this->number1$this->number2");
     }
 
     public function getNumber1(): ?int

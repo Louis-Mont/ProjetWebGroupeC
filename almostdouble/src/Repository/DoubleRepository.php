@@ -19,6 +19,13 @@ class DoubleRepository extends ServiceEntityRepository
         parent::__construct($registry, Double::class);
     }
 
+    public function findLatest(){
+        return $this->createQueryBuilder('d')
+            ->setMaxResults(4)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Double[] Returns an array of Double objects
     //  */

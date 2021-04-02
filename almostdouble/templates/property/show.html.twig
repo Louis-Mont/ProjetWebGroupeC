@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-4">
+                <h1>{{ double.number1 }} ; {{ double.number2 }}</h1>
+                <h2>Demande le résultat : {% if double.askresult %} oui {% else %} non {% endif %}</h2>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block title %}
+    
+{% endblock %}
