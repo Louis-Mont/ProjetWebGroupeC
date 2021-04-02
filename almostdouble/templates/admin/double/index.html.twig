@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+	<div class="container mt-4">
+
+		<h1>Gérer les Doubles</h1>
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Titre</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for double in doubles %}
+					<tr>
+						<td>{{ double.number1 }}
+							;
+							{{ double.number2 }}
+						</td>
+						<td>
+							<a href="{{ path('admin.double.edit', {id: double.id}) }}" class="btn btn-secondary">Editer</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+{% endblock %}
