@@ -6,6 +6,8 @@ use App\Entity\Double;
 use App\Form\DoubleType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Repository\DoubleRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -13,9 +15,12 @@ class AdminDoubleController extends AbstractController
 {
     private $repository;
 
-    public function __construct(DoubleRepository $repository)
+    private $em;
+
+    public function __construct(DoubleRepository $repository, EntityManagerInterface $em)
     {
         $this->repository = $repository;
+        $this->em = $em;
     }
 
     /**
@@ -34,9 +39,16 @@ class AdminDoubleController extends AbstractController
      *
      * @return void
      */
-    public function edit(Double $double)
+    public function edit(Double $double, Request $request)
     {
         $form = $this->createForm(DoubleType::class, $double);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->flush();
+            return $this->redirectToRoute('admin.double.index');
+        }
+
         return $this->render("admin/double/edit.html.twig", [
             'double' => $double,
             'form' => $form->createView()
