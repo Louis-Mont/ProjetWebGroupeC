@@ -17,4 +17,12 @@ class EnglishController extends AbstractController
             'controller_name' => 'EnglishController',
         ]);
     }
+
+    /**
+     * @Route ("/", name="home")
+     *
+     **/
+    public function home (){
+        return $this->render('english/home.html.twig');
+    }
 }
