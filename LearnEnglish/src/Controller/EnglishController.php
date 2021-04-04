@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class EnglishController extends AbstractController
 {
     /**
-     * @Route("/english", name="english")
+     * @Route("/lecon", name="lecon")
      */
     public function index(): Response
     {
@@ -23,6 +23,8 @@ class EnglishController extends AbstractController
      *
      **/
     public function home (){
-        return $this->render('english/home.html.twig');
+        return $this->render('english/home.html.twig',['title'=>"Welcome"]);
     }
+
+
 }
