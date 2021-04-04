@@ -3,16 +3,6 @@
 {% block body %}
 	<div class="container mt-4">
 		<h1>Editer le bien</h1>
-		{{ form_start(form) }}
-		<div class="row">
-			<div class="col-md-4">{{ form_row(form.number1) }}</div>
-			<div class="col-md-4">{{ form_row(form.number2) }}</div>
-		</div>
-        <div class="row">
-			<div class="col-md-2">{{ form_row(form.askResult) }}</div>
-		</div>
-		{{ form_widget(form) }}
-		<button class="btn btn-primary">Editer</button>
-		{{ form_end(form) }}
+		{{ include("admin/double/_form.html.twig", {form: form, button: "Editer"}) }}
 	</div>
 {% endblock %}

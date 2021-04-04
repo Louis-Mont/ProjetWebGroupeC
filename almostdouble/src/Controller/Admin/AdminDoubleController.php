@@ -35,9 +35,32 @@ class AdminDoubleController extends AbstractController
     }
 
     /**
-     * @Route("/admin/{id}", name="admin.double.edit")
+     * @Route("/admin/double/create", name="admin.double.new")
      *
-     * @return void
+     * @return Response
+     */
+    public function new(Request $request)
+    {
+        $double = new Double();
+        $form = $this->createForm(DoubleType::class, $double);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->persist($double);
+            $this->em->flush();
+            return $this->redirectToRoute('admin.double.index');
+        }
+
+        return $this->render("admin/double/new.html.twig", [
+            'double' => $double,
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/admin/double/{id}", name="admin.double.edit")
+     *
+     * @return Response
      */
     public function edit(Double $double, Request $request)
     {
