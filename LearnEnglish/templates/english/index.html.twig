@@ -3,18 +3,17 @@
 {% block title %}Hello EnglishController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<section>
+    {% for lecon in lecons %}
+    <article><h2>{{ lecon.title }}</h2>
+    <div class="metadata">Ecrit le {{ lecon.createdAT | date ('d/m/Y')}} à {{ lecon.createdAt | date ('H:i') }} dans la catégorie Hallowen</div>
+    <div class="content">
+        <img src="{{ lecon.image }}" alt="">
+      {{ lecon.content | raw }}
+        <a href="{{ path('english_show', {'id' : lecon.id}) }}" class="btn btn-primary">Lire la suite</a></div>
+</article>
+    {% endfor %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+</section>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'E:/wamp64/www/ProjetWebGroupeC/LearnEnglish/src/Controller/EnglishController.php'|file_link(0) }}">src/Controller/EnglishController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'E:/wamp64/www/ProjetWebGroupeC/LearnEnglish/templates/english/index.html.twig'|file_link(0) }}">templates/english/index.html.twig</a></code></li>
-    </ul>
-</div>
 {% endblock %}
