@@ -1,22 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <article><h2>Titre de la Lecon</h2>
-        <div class="metadata">Ecrit le 10/05/2021 à 19:00 dans la catégorie Hallowen</div>
+    <article>
+        <h2>{{ lecon.title }}</h2>
+        <div class="metadata">Ecrit le {{ lecon.createdAt | date ('d/m/Y') }} à{{lecon.createdAt | date ('H:i') }} dans la catégorie Hallowen</div>
         <div class="content">
-            <img src="https://via.placeholder.com/350x150" alt="">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias consequatur eos exercitationem repellendus,
-                sint tempore?</p>
-            <p>Dolorem laborum libero maxime mollitia non nulla obcaecati perspiciatis placeat, porro repellendus sed,
-                voluptas voluptatibus.</p>
-           <hr>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error illum neque odit officia optio
-                praesentium sed veritatis? Corporis eum excepturi ipsum itaque officiis perspiciatis, rem saepe tenetur
-                vel? Accusantium amet consequuntur deserunt error, labore, minima mollitia, natus nostrum repudiandae
-                sequi sunt vero. Alias cupiditate incidunt ipsam, mollitia nemo quia vero.</p>
-            <p>Consequatur eligendi esse illum molestias nisi officiis, provident recusandae. Deleniti dolorum eaque
-                excepturi, maiores perspiciatis quas quis reprehenderit veritatis! Eius eum nostrum perferendis quia
-                velit vero voluptatem voluptates. Cum eius eligendi error et illo laudantium nihil optio quod soluta
-                sunt. Earum ex iste itaque nemo quibusdam rem sit ullam voluptate?</p>
+            <img src="{{ lecon.image }}" alt="">
+            {{ lecon.content | raw }}
     </article>
 {% endblock body %}

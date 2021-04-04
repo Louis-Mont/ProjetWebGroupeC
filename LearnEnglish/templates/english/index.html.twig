@@ -4,38 +4,16 @@
 
 {% block body %}
 <section>
-    <article><h2>Titre de la Lecon</h2>
-    <div class="metadata">Ecrit le 10/05/2021 à 19:00 dans la catégorie Hallowen</div>
+    {% for lecon in lecons %}
+    <article><h2>{{ lecon.title }}</h2>
+    <div class="metadata">Ecrit le {{ lecon.createdAT | date ('d/m/Y')}} à {{ lecon.createdAt | date ('H:i') }} dans la catégorie Hallowen</div>
     <div class="content">
-        <img src="https://via.placeholder.com/350x150" alt="">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias consequatur eos exercitationem repellendus,
-            sint tempore?</p>
-        <p>Dolorem laborum libero maxime mollitia non nulla obcaecati perspiciatis placeat, porro repellendus sed,
-            voluptas voluptatibus.</p>
-        <a href="{{ path('lecon_show') }}" class="btn btn-primary">Lire la suite</a></div>
+        <img src="{{ lecon.image }}" alt="">
+      {{ lecon.content | raw }}
+        <a href="{{ path('english_show', {'id' : lecon.id}) }}" class="btn btn-primary">Lire la suite</a></div>
 </article>
+    {% endfor %}
 
-    <article><h2>Titre de la Lecon</h2>
-    <div class="metadata">Ecrit le 10/05/2021 à 19:00 dans la catégorie Hallowen</div>
-    <div class="content">
-        <img src="https://via.placeholder.com/350x150" alt="">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias consequatur eos exercitationem repellendus,
-            sint tempore?</p>
-        <p>Dolorem laborum libero maxime mollitia non nulla obcaecati perspiciatis placeat, porro repellendus sed,
-            voluptas voluptatibus.</p>
-        <a href="{{ path('lecon_show') }}" class="btn btn-primary">Lire la suite</a></div>
-    </article>
-
-    <article><h2>Titre de la Lecon</h2>
-    <div class="metadata">Ecrit le 10/05/2021 à 19:00 dans la catégorie Hallowen</div>
-    <div class="content">
-        <img src="https://via.placeholder.com/350x150" alt="">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias consequatur eos exercitationem repellendus,
-            sint tempore?</p>
-        <p>Dolorem laborum libero maxime mollitia non nulla obcaecati perspiciatis placeat, porro repellendus sed,
-            voluptas voluptatibus.</p>
-        <a href="{{ path('lecon_show') }}" class="btn btn-primary">Lire la suite</a></div>
-    </article>
 </section>
 
 {% endblock %}
