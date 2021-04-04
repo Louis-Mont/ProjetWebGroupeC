@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\LeconRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * @ORM\Entity(repositoryClass=LeconRepository::class)
@@ -36,6 +37,12 @@ class Lecon
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
+
+    public function __construct()
+    {
+        $this->createdAt = new DateTime();
+    }
+
 
     public function getId(): ?int
     {
