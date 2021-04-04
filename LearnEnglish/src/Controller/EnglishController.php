@@ -18,6 +18,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class EnglishController extends AbstractController
 {
+
+
+
     /**
      * @Route ("/english", name="english")
      */
@@ -46,8 +49,6 @@ class EnglishController extends AbstractController
      **/
     public function create(Request $request, EntityManagerInterface $entityManager){
         $lecon = new Lecon();
-
-
         $form = $this->createForm(LeconType::class, $lecon);
 
         $form->handleRequest($request);
@@ -56,10 +57,10 @@ class EnglishController extends AbstractController
         if($form->isSubmitted()&& $form->isValid()){
             $lecon->setCreatedAt(new \DateTime());
 
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($lecon);
             $entityManager->flush();
 
-            return $this->redirectToRoute('english_show',['id' => $lecon->getId()]);
+            return $this->redirectToRoute('english_show',['id'=> $lecon->getId()]);
         }
 
 
