@@ -26,5 +26,12 @@ class EnglishController extends AbstractController
         return $this->render('english/home.html.twig',['title'=>"Welcome"]);
     }
 
+    /**
+     * @Route ("/lecon/12", name="lecon_show")
+     */
+    public function show (){
+        return $this->render('english/show.html.twig');
+    }
+
 
 }
