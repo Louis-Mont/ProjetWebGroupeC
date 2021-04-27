@@ -48,6 +48,7 @@ class AdminDoubleController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->persist($double);
             $this->em->flush();
+            $this->addFlash('success', 'Double créé avec succès');
             return $this->redirectToRoute('admin.double.index');
         }
 
@@ -58,7 +59,7 @@ class AdminDoubleController extends AbstractController
     }
 
     /**
-     * @Route("/admin/double/{id}", name="admin.double.edit")
+     * @Route("/admin/double/{id}", name="admin.double.edit", methods="GET|POST")
      *
      * @return Response
      */
@@ -69,6 +70,7 @@ class AdminDoubleController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();
+            $this->addFlash('success', 'Double modifié avec succès');
             return $this->redirectToRoute('admin.double.index');
         }
 
@@ -76,5 +78,22 @@ class AdminDoubleController extends AbstractController
             'double' => $double,
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/admin/double/{id}", name="admin.double.delete", methods="DELETE")
+     *
+     * 
+     * @return Response
+     */
+    public function delete(Double $double, Request $request)
+    {
+        if ($this->isCsrfTokenValid('delete' . $double->getId(), $request->get('_token'))) {
+            $this->em->remove($double);
+            $this->em->flush();
+            $this->addFlash('success', 'Double supprimé avec succès');
+            // return new Response('Suppression');
+        }
+        return $this->redirectToRoute('admin.double.index');
     }
 }

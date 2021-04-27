@@ -6,6 +6,12 @@
 
 		<h1>Gérer les Doubles</h1>
 
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-success">
+				{{ message }}
+			</div>
+		{% endfor %}
+
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -22,11 +28,20 @@
 						</td>
 						<td>
 							<a href="{{ path('admin.double.edit', {id: double.id}) }}" class="btn btn-secondary">Editer</a>
+							<form method="post" action="{{ path('admin.double.delete', {id: double.id}) }}" style="display: inline-block" onsubmit="return confirm('Etes-vous vraiment sûr?')">
+								<input type="hidden" name="_method" value="DELETE">
+								<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ double.id) }}">
+								<button class="btn btn-danger">Supprimer</button>
+							</form>
 						</td>
 					</tr>
 				{% endfor %}
 			</tbody>
 		</table>
+
+		<div class="text-right">
+			<a href="{{ path('admin.double.new') }}" class="btn btn-primary">Créer un nouveau double</a>
+		</div>
 	</div>
 
 {% endblock %}

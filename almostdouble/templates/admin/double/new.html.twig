@@ -1,5 +1,8 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    
+    <div class="container mt-4">
+		<h1>Ajouter un double</h1>
+		{{ include("admin/double/_form.html.twig", {form: form, button: "Nouveau"}) }}
+	</div>
 {% endblock %}

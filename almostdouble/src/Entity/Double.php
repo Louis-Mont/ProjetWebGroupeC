@@ -5,10 +5,13 @@ namespace App\Entity;
 use App\Repository\DoubleRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=DoubleRepository::class)
  * @ORM\Table(name="`double`")
+ * @UniqueEntity(fields={"number1", "number2"}, message="Ce double existe déjà")
  */
 class Double
 {
@@ -21,11 +24,13 @@ class Double
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(min=0,max=100)
      */
     private $number1;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(min=0,max=100)
      */
     private $number2;
 
