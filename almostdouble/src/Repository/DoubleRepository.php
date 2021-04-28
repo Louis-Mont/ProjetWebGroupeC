@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Double;
+use App\Entity\DoubleSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,7 +21,30 @@ class DoubleRepository extends ServiceEntityRepository
         parent::__construct($registry, Double::class);
     }
 
-    public function findLatest(){
+    public function findAllQuery(DoubleSearch $search): Query
+    {
+        $query = $this->createQueryBuilder('d');
+
+        if ($search->getMaxNumber()) {
+            $query = $query->andWhere('d.number1 <= :maxnumber and d.number2 <= :maxnumber')
+                ->setParameter('maxnumber', $search->getMaxNumber());
+        }
+
+        if ($search->getMinNumber()) {
+            $query = $query->andWhere('d.number1 >= :minnumber and d.number2 >= :minnumber')
+                ->setParameter('minnumber', $search->getMinNumber());
+        }
+
+        if ($search->getAskResult()) {
+            $query = $query->andWhere('d.askResult = :askresult')
+                ->setParameter('askresult', $search->getAskResult());
+        }
+
+        return $query->getQuery();
+    }
+
+    public function findLatest()
+    {
         return $this->createQueryBuilder('d')
             ->setMaxResults(4)
             ->getQuery()

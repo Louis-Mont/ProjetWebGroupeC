@@ -1,10 +1,45 @@
 {% extends 'base.html.twig' %}
 
 {% block title 'Voir les listes' %}
-    
+
 {% block body %}
-    <div class="container mt-4">
-        <h1>Listes<h1>
-        <p></p>
-    </div>
+
+	<div class="jumbotron">
+		<div class="container">
+			{{ form_start(form) }}
+			<div class="form-row align-items-end">
+				<div class="col">
+					{{ form_row(form.minNumber) }}
+				</div>
+				<div class="col">
+					{{ form_row(form.maxNumber) }}
+				</div>
+				<div class="col">
+					{{ form_row(form.askResult) }}
+				</div>
+				<div class="col">
+					<div class="form-group">
+						<button class="btn btn-primary">
+							Rechercher</button>
+					</div>
+				</div>
+				{{ form_end(form) }}
+			</div>
+		</div>
+	</div>
+
+	<div class="container mt-4">
+		<h1>Doubles</h1>
+		<div class="row">
+			{% for double in doubles %}
+				<div class="col-md-4">
+					{% include "property/_double.html.twig" %}
+				</div>
+			{% endfor %}
+		</div>
+
+		<div class="pagination">
+			{{ knp_pagination_render(doubles) }}
+		</div>
+	</div>
 {% endblock %}

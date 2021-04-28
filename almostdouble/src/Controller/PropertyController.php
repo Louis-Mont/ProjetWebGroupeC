@@ -6,8 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Double;
+use App\Entity\DoubleSearch;
+use App\Form\DoubleSearchType;
 use App\Repository\DoubleRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Knp\Component\Pager\PaginatorInterface;
 
 class PropertyController extends AbstractController
 {
@@ -25,22 +29,22 @@ class PropertyController extends AbstractController
      *
      * @return Response
      */
-    public function index(): Response
+    public function index(PaginatorInterface $paginator, Request $request): Response
     {
-        /*$double = new Double();
-        $double->setNumber1(7);
-        $double->setNumber2(8);
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($double);
-        $em->flush();*/
-        /*$repo = $this->getDoctrine()->getRepository(Double::class);
-        dump($repo);*/
-        $doubles = $this->repository->findAll();
-        dump($doubles);
+        $search = new DoubleSearch();
+        $form = $this->createForm(DoubleSearchType::class, $search);
+        $form->handleRequest($request);
+
+        $doubles = $paginator->paginate(
+            $this->repository->findAllQuery($search),
+            $request->query->getInt('page', 1),
+            12
+        );
 
         return $this->render("property/index.html.twig", [
             'current_menu' => 'list',
-            'doubles' => $doubles
+            'doubles' => $doubles,
+            'form' => $form->createView()
         ]);
     }
 
@@ -51,7 +55,7 @@ class PropertyController extends AbstractController
      */
     public function show(Double $double, string $slug): Response
     {
-        if($double->getSlug() !== $slug){
+        if ($double->getSlug() !== $slug) {
             return $this->redirectToRoute('double.show', [
                 'id' => $double->getId(),
                 'slug' => $double->getSlug()

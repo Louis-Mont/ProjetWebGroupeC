@@ -1,0 +1,16 @@
+<div class="card mb-4">
+	<div class="card-body">
+		<h5 class="card-title">
+			<a href="{{ path('double.show', {id: double.id, slug: double.slug}) }}">{{ double.number1 }}
+				;
+				{{ double.number2 }}</a>
+		</h5>
+		<h5 class="card-text">
+			{% if double.askresult %}
+				<p class="text-success">Demande de résultat</p>
+			{% else %}
+				<p class="text-secondary">Sans demande de résultat</p>
+			{% endif %}
+		</h5>
+	</div>
+</div>
