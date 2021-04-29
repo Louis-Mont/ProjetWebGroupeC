@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Voir les listes' %}
+
+{% block body %}
+
+	<div class="container mt-4">
+		<h1>Listes</h1>
+		<div class="row">
+			{% for ldouble in ldoubles %}
+				<div class="col-md-4">
+					<div class="card mb-4">
+						<div class="card-body">
+							<h5 class="card-title">
+								<a href="{{ path('listcouples.show', {id: ldouble.id, slug: ldouble.slug}) }}">ID :
+									{{ ldouble.id }}</a>
+							</h5>
+							<h5 class="card-text">
+								{% for double in ldouble.couples[:4] %}
+									<div class="card mb-4">
+										<div class="card-body">
+											<h5 class="card-title">
+												{{ double.number1 }}
+												-
+												{{ double.number2 }}
+											</h5>
+										</div>
+									</div>
+								{% endfor %}
+							</h5>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+
+		<div class="pagination">
+			{{ knp_pagination_render(ldoubles) }}
+		</div>
+	</div>
+
+{% endblock %}

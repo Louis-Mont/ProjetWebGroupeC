@@ -1,0 +1,13 @@
+<div class="card mb-4">
+	<div class="card-body">
+		<h5 class="card-title">
+			<a href="{{ path('listcouples.show', {id: ldouble.id, slug: ldouble.slug}) }}">ID :
+				{{ ldouble.id }}</a>
+		</h5>
+		<h5 class="card-text">
+			{% for double in ldouble.couples %}
+				{{ include("property/_double.html.twig") }}
+			{% endfor %}
+		</h5>
+	</div>
+</div>

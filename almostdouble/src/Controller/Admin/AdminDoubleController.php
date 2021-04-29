@@ -24,7 +24,7 @@ class AdminDoubleController extends AbstractController
     }
 
     /**
-     * @Route("/admin", name="admin.double.index")
+     * @Route("/admin/double", name="admin.double.index")
      *
      * @return Response
      */

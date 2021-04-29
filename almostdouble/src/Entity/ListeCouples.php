@@ -6,6 +6,7 @@ use App\Repository\ListeCouplesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Cocur\Slugify\Slugify;
 
 /**
  * @ORM\Entity(repositoryClass=ListeCouplesRepository::class)
@@ -32,6 +33,11 @@ class ListeCouples
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getSlug(): string
+    {
+        return (new Slugify())->slugify("$this->id");
     }
 
     /**

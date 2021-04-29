@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			{% block title %}Doubles?
+			{% block title %}Doubles & Presque doubles
 			{% endblock %}
 		</title>
 		{% block stylesheets %}
@@ -26,7 +26,7 @@
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 						<li class="nav-item">
-							<a class="nav-link {% if current_menu is defined and current_menu=='list' %} active {% endif %}" aria-current="page" href="{{ path('double.index') }}">Liste des doubles</a>
+							<a class="nav-link {% if current_menu is defined and current_menu=='list' %} active {% endif %}" aria-current="page" href="{{ path('listecouples.index') }}">Listes</a>
 						</li>
 					</ul>
 					{% if app.user %}

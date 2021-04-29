@@ -19,6 +19,14 @@ class ListeCouplesRepository extends ServiceEntityRepository
         parent::__construct($registry, ListeCouples::class);
     }
 
+    public function findLatest()
+    {
+        return $this->createQueryBuilder('l')
+            ->setMaxResults(4)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return ListeCouples[] Returns an array of ListeCouples objects
     //  */

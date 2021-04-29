@@ -1,21 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title 'Agence lorem ipsum' %}
+{% block title 'Doubles & presques doubles' %}
 
 {% block body %}
 	<div class="jumbotron text-center">
-		<h1>Agence lorem ipsum</h1>
+		<h1>Doubles & presques doubles</h1>
 		<p></p>
 	</div>
 
 	<div class="container">
 		<h2>
-			Quelques doubles
+			Quelques listes
 		</h2>
 		<div class="row flex">
-			{% for double in doubles %}
+			{% for ldouble in ldoubles %}
 				<div class="col-3">
-					{% include "property/_double.html.twig" %}
+					{% include "/listdouble/_listdouble.html.twig" %}
 				</div>
 			{% endfor %}
 		</div>
