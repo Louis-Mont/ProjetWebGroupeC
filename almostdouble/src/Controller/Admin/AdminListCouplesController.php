@@ -24,18 +24,21 @@ class AdminListCouplesController extends AbstractController
     }
 
     /**
-     * @Route("/admin", name="admin.listcouples.index")
+     * @Route("/admin", name="admin.listdouble.index")
      *
      * @return Response
      */
     public function index()
     {
         $listcouples = $this->repository->findAll();
-        return $this->render('admin/listdouble/index.html.twig', compact('listcouples'));
+        return $this->render('admin/listdouble/index.html.twig', [
+            'ldoubles' => $listcouples,
+            'current_menu' => 'admin'
+        ]);
     }
 
     /**
-     * @Route("/admin/listcouples/create", name="admin.listcouples.new")
+     * @Route("/admin/listcouples/create", name="admin.listdouble.new")
      *
      * @return Response
      */
@@ -59,7 +62,7 @@ class AdminListCouplesController extends AbstractController
     }
 
     /**
-     * @Route("/admin/listcouples/{id}", name="admin.listcouples.edit", methods="GET|POST")
+     * @Route("/admin/listcouples/{id}", name="admin.listdouble.edit", methods="GET|POST")
      *
      * @return Response
      */
@@ -71,7 +74,7 @@ class AdminListCouplesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();
             $this->addFlash('success', 'Liste modifiée avec succès');
-            return $this->redirectToRoute('admin.listcouples.index');
+            return $this->redirectToRoute('admin.listdouble.index');
         }
 
         return $this->render("admin/listdouble/edit.html.twig", [
@@ -81,7 +84,7 @@ class AdminListCouplesController extends AbstractController
     }
 
     /**
-     * @Route("/admin/listcouples/{id}", name="admin.listcouples.delete", methods="DELETE")
+     * @Route("/admin/listcouples/{id}", name="admin.listdouble.delete", methods="DELETE")
      *
      * 
      * @return Response
@@ -94,6 +97,6 @@ class AdminListCouplesController extends AbstractController
             $this->addFlash('success', 'Liste supprimée avec succès');
             // return new Response('Suppression');
         }
-        return $this->redirectToRoute('admin.listcouples.index');
+        return $this->redirectToRoute('admin.listdouble.index');
     }
 }

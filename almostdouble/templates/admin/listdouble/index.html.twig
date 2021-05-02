@@ -4,7 +4,7 @@
 
 	<div class="container mt-4">
 
-		<h1>Gérer les Doubles</h1>
+		<h1>Gérer les Listes</h1>
 
 		{% for message in app.flashes('success') %}
 			<div class="alert alert-success">
@@ -28,7 +28,7 @@
 							<a href="{{ path('admin.listdouble.edit', {id: ldouble.id}) }}" class="btn btn-secondary">Editer</a>
 							<form method="post" action="{{ path('admin.listdouble.delete', {id: ldouble.id}) }}" style="display: inline-block" onsubmit="return confirm('Etes-vous vraiment sûr?')">
 								<input type="hidden" name="_method" value="DELETE">
-								<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ double.id) }}">
+								<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ldouble.id) }}">
 								<button class="btn btn-danger">Supprimer</button>
 							</form>
 						</td>
@@ -38,7 +38,7 @@
 		</table>
 
 		<div class="text-right">
-			<a href="{{ path('admin.listdouble.new') }}" class="btn btn-primary">Créer un nouveau double</a>
+			<a href="{{ path('admin.listdouble.new') }}" class="btn btn-primary">Créer une nouvelle liste</a>
 		</div>
 	</div>
 

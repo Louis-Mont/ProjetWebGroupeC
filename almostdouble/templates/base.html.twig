@@ -32,7 +32,16 @@
 					{% if app.user %}
 						<ul class="navbar-nav">
 							<li class="nav-item">
+								<a href={{ path('admin.listdouble.index') }} class="nav-link {% if current_menu is defined and current_menu=='admin' %} active {% endif %}">Gérer les listes</a>
+							</li>
+							<li class="nav-item">
 								<a href={{ path('logout') }} class="nav-link">Se déconnecter</a>
+							</li>
+						</ul>
+					{% else %}
+						<ul class="navbar-nav">
+							<li class="nav-item">
+								<a href={{ path('login') }} class="nav-link">Se connecter</a>
 							</li>
 						</ul>
 					{% endif %}

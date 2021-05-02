@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Doubles & presques doubles' %}
+
+{% block body %}
+
+	<div class="container mt-8">
+		<h2>Liste
+			{{ lcouple.id }}</h2>
+	</div>
+    <div class="container mt-8">
+        {% for double in lcouple.Couples %}
+            <div class="jumbotron mt-4 text-center">
+                <h1>{{ double.number1 }}
+                    ;
+                    {{ double.number2 }}</h1>
+            </div>
+            <div class="text-center mt-4">
+                {% if double.askResult %}
+                    <input type="text" placeholder="Résultat" class="form-control"/>
+                {% endif %}
+            </div>
+            <div class="row justify-content-center flex mt-4">
+                <div class="col-4">
+                    <button class="btn btn-success">Double</button>
+                </div>
+                <div class="col-4">
+                    <button class="btn btn-primary">Presque Double</button>
+                </div>
+                <div class="col-4">
+                    <button class="btn btn-danger">Aucun des deux</button>
+                </div>
+            </div>
+            {% endfor %}
+    </div>
+
+	<script>
+        var arr = [];
+
+        function goToNext(action){
+            let curr = arr[0].split(';');
+            let n1 = curr[0];
+            let n2 = curr[1];
+            let askr = curr[2];
+            if(askr){
+                if(Math.abs(n1-n2)==Math.abs($("input")[0].value)){
+                    console.log("goodresponse");
+                }else{
+                    console.log("badresponse");
+                }
+            }
+
+            switch(action){
+                case 'success':
+                    if(n1-n2==0){
+                        console.log("double");
+                    }else{
+                        console.log("notdouble");
+                    }
+                break;
+                case 'primary':
+                    if(Math.abs(n1-n2)==1){
+                        console.log("presquedouble");
+                    }else{
+                        console.log("not presquedouble");
+                    }
+                break;
+                case 'danger':
+                    if(Math.abs(n1-n2)>1){
+                        console.log("none");
+                    }else{
+                        console.log("nonone");
+                    }
+                default:
+                    console.log("not renseigned");
+            }
+        }
+		
+        {% for double in lcouple.Couples %}
+            arr.push("{{ double.number1 }};{{ double.number2 }};{{ double.askResult }}");
+        {% endfor %}
+        console.log( arr );
+        $(".btn-success").click(() => goToNext('success'));
+        $(".btn-primary").click(() => goToNext('primary'));
+        $(".btn-danger").click(() => goToNext('danger'));
+	</script>
+
+{% endblock %}

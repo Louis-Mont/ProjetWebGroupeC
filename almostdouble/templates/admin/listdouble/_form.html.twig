@@ -1,7 +1,24 @@
 {{ form_start(form) }}
 <div class="row">
-	<div class="col-md-2">{{ form_row(form.couples) }}</div>
+	{{ form_label(form.Couples) }}
+	{{ form_errors(form.Couples) }}
+
+	<ul>
+		{% for couple in form.Couples %}
+			<li>
+				{{ form_errors(couple) }}
+				{{ form_widget(couple) }}
+			</li>
+		{% endfor %}
+	</ul>
 </div>
+<button type="button" class="add-another-collection-widget" data-list-selector="#double-field-list">
+	Add another couple</button>
 {{ form_widget(form) }}
+
 <button class="btn btn-primary">{{ button|default('Enregister') }}</button>
 {{ form_end(form) }}
+
+<script>
+	
+</script>

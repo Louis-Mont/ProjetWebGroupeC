@@ -22,7 +22,7 @@ class ListeCouplesRepository extends ServiceEntityRepository
     public function findLatest()
     {
         return $this->createQueryBuilder('l')
-            ->setMaxResults(4)
+            ->setMaxResults(6)
             ->getQuery()
             ->getResult();
     }
