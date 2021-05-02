@@ -28,8 +28,11 @@ class AlmostDoubleController extends AbstractController
      */
     public function index(ListeCouples $listcouples)
     {
+        $couples = $listcouples->getCouples()->toArray();
+        shuffle($couples);
         return $this->render('pages/almostdouble.html.twig', [
-            'lcouple' => $listcouples
+            'lcouple' => $listcouples,
+            'couples' => $couples
         ]);
     }
 }

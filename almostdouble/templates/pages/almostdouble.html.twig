@@ -3,82 +3,109 @@
 {% block title 'Doubles & presques doubles' %}
 
 {% block body %}
-
 	<div class="container mt-8">
 		<h2>Liste
 			{{ lcouple.id }}</h2>
+            <div class="alert"></div>
 	</div>
+    {% set double = couples[0] %}
     <div class="container mt-8">
-        {% for double in lcouple.Couples %}
-            <div class="jumbotron mt-4 text-center">
-                <h1>{{ double.number1 }}
-                    ;
-                    {{ double.number2 }}</h1>
+        <div class="jumbotron mt-4 text-center">
+            <h1>{{ double.number1 }}
+                :
+                {{ double.number2 }}</h1>
+        </div>
+        <div class="text-center mt-4">
+            <input type="text" placeholder="Résultat" class="form-control"/>
+        </div>
+        <div class="row justify-content-center flex mt-4">
+            <div class="col-4">
+                <button class="btn btn-success">Double</button>
             </div>
-            <div class="text-center mt-4">
-                {% if double.askResult %}
-                    <input type="text" placeholder="Résultat" class="form-control"/>
-                {% endif %}
+            <div class="col-4">
+                <button class="btn btn-primary">Presque Double</button>
             </div>
-            <div class="row justify-content-center flex mt-4">
-                <div class="col-4">
-                    <button class="btn btn-success">Double</button>
-                </div>
-                <div class="col-4">
-                    <button class="btn btn-primary">Presque Double</button>
-                </div>
-                <div class="col-4">
-                    <button class="btn btn-danger">Aucun des deux</button>
-                </div>
+            <div class="col-4">
+                <button class="btn btn-danger">Aucun des deux</button>
             </div>
-            {% endfor %}
+        </div>
     </div>
 
 	<script>
         var arr = [];
+        var curr_i = 0;
 
-        function goToNext(action){
-            let curr = arr[0].split(';');
+        function page(curr_i){
+            let curr = arr[curr_i].split(';');
             let n1 = curr[0];
             let n2 = curr[1];
             let askr = curr[2];
+            $("h1").html(`${n1} : ${n2}`);
+            if(askr){
+                $("input").show();
+            }else{
+                $("input").hide();
+            }
+        }
+
+        function goToNext(action){
+            $(".alert").html("");
+            let curr = arr[curr_i].split(';');
+            let n1 = curr[0];
+            let n2 = curr[1];
+            let askr = curr[2];
+            let msgs = [];
             if(askr){
                 if(Math.abs(n1-n2)==Math.abs($("input")[0].value)){
-                    console.log("goodresponse");
+                    msgs.push(`Vous avez bien calculé !`);
                 }else{
-                    console.log("badresponse");
+                    msgs.push(`Vous avez mal calculé, la bonne réponse était ${n1-n2}`);
                 }
             }
 
             switch(action){
                 case 'success':
                     if(n1-n2==0){
-                        console.log("double");
+                        msgs.push("C'est bien un double !")
                     }else{
-                        console.log("notdouble");
+                        msgs.push("Ce n'est pas un double!")
                     }
                 break;
                 case 'primary':
                     if(Math.abs(n1-n2)==1){
-                        console.log("presquedouble");
+                        msgs.push("C'est bien un presque double !")
                     }else{
-                        console.log("not presquedouble");
+                        msgs.push("Ce n'est pas un presque double")
                     }
                 break;
                 case 'danger':
                     if(Math.abs(n1-n2)>1){
-                        console.log("none");
+                        msgs.push("Ce n'est en effet ni un double, ni un presque double !")
                     }else{
-                        console.log("nonone");
+                        msgs.push("C'est soit un double, soit un presque double")
                     }
+                break;
                 default:
                     console.log("not renseigned");
             }
+
+            curr_i++;
+            $(".alert").addClass("alert-info");
+            for(let i=0;i<msgs.length;i++){
+                console.log(msgs[i]);
+                $(".alert").append(`<p>${msgs[i]}</p>`)
+            }
+            if(arr.length-1!=curr_i){
+                page(curr_i);
+            }else{
+                $("button").prop('disabled',true);
+            }
         }
 		
-        {% for double in lcouple.Couples %}
+        {% for double in couples %}
             arr.push("{{ double.number1 }};{{ double.number2 }};{{ double.askResult }}");
         {% endfor %}
+        page(curr_i);
         console.log( arr );
         $(".btn-success").click(() => goToNext('success'));
         $(".btn-primary").click(() => goToNext('primary'));

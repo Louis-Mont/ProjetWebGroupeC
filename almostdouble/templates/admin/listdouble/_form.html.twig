@@ -1,18 +1,24 @@
 {{ form_start(form) }}
 <div class="row">
-	{{ form_label(form.Couples) }}
-	{{ form_errors(form.Couples) }}
+	<div class="col">
+		{{ form_label(form.Couples) }}
+		{{ form_errors(form.Couples) }}
 
-	<ul>
-		{% for couple in form.Couples %}
-			<li>
-				{{ form_errors(couple) }}
-				{{ form_widget(couple) }}
-			</li>
-		{% endfor %}
-	</ul>
+		<ul class="tags" data-prototype="{{ form_widget(form.Couples.vars.prototype)|e('html_attr') }}">
+			{% for couple in form.Couples %}
+				<li>
+					<div class="row">
+						{{ form_errors(couple) }}
+						<div class="col">{{ form_row(couple.number1) }}</div>
+						<div class="col">{{ form_row(couple.number2) }}</div>
+						<div class="col">{{ form_row(couple.askResult) }}</div>
+					</div>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
 </div>
-<button type="button" class="add-another-collection-widget" data-list-selector="#double-field-list">
+<button type="button" class="add_item_link btn btn-secondary" data-collection-holder-class="tags">
 	Add another couple</button>
 {{ form_widget(form) }}
 
@@ -20,5 +26,68 @@
 {{ form_end(form) }}
 
 <script>
-	
+function addTagFormDeleteLink($tagFormLi) {
+    var $removeFormButton = $('<button type="button" class="btn btn-danger">Delete this tag</button>');
+    $tagFormLi.append($removeFormButton);
+
+    $removeFormButton.on('click', function(e) {
+        // remove the li for the tag form
+        $tagFormLi.remove();
+    });
+}
+
+function addFormToCollection($collectionHolderClass) {
+    // Get the ul that holds the collection of tags
+    var $collectionHolder = $('.' + $collectionHolderClass);
+
+    // Get the data-prototype explained earlier
+    var prototype = $collectionHolder.data('prototype');
+
+    // get the new index
+    var index = $collectionHolder.data('index');
+
+    var newForm = prototype;
+    // You need this only if you didn't set 'label' => false in your tags field in TaskType
+    // Replace '__name__label__' in the prototype's HTML to
+    // instead be a number based on how many items we have
+    // newForm = newForm.replace(/__name__label__/g, index);
+
+    // Replace '__name__' in the prototype's HTML to
+    // instead be a number based on how many items we have
+    newForm = newForm.replace(/__name__/g, index);
+
+    // increase the index with one for the next item
+    $collectionHolder.data('index', index + 1);
+
+    // Display the form in the page in an li, before the "Add a tag" link li
+    var $newFormLi = $('<li></li>').append(newForm);
+    // Add the new form at the end of the list
+    $collectionHolder.append($newFormLi)
+
+	// add a delete link to the new form
+    addTagFormDeleteLink($newFormLi);
+}
+
+jQuery(document).ready(function() {
+	// Get the ul that holds the collection of tags
+    $collectionHolder = $('ul.tags');
+
+    // add a delete link to all of the existing tag form li elements
+    $collectionHolder.find('li').each(function() {
+        addTagFormDeleteLink($(this));
+    });
+
+    // Get the ul that holds the collection of tags
+    var $tagsCollectionHolder = $('ul.tags');
+    // count the current form inputs we have (e.g. 2), use that as the new
+    // index when inserting a new item (e.g. 2)
+    $tagsCollectionHolder.data('index', $tagsCollectionHolder.find('input').length);
+
+    $('body').on('click', '.add_item_link', function(e) {
+        var $collectionHolderClass = $(e.currentTarget).data('collectionHolderClass');
+        // add a new tag form (see next code block)
+        addFormToCollection($collectionHolderClass);
+    })
+});
+
 </script>

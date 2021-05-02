@@ -11,7 +11,7 @@ class DoubleFixture extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 1; $i < 20; $i++) {
             $listcouples = new ListeCouples();
             for ($j = 0; $j < 10; $j++) {
                 $double = new Double();

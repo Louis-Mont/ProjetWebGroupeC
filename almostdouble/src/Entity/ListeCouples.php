@@ -48,19 +48,13 @@ class ListeCouples
         return $this->Couples;
     }
 
-    public function addCouple(Double $couple): self
+    public function addCouple(Double $couple): void
     {
-        if (!$this->Couples->contains($couple)) {
-            $this->Couples[] = $couple;
-        }
-
-        return $this;
+        $this->Couples->add($couple);
     }
 
-    public function removeCouple(Double $couple): self
+    public function removeCouple(Double $couple): void
     {
         $this->Couples->removeElement($couple);
-
-        return $this;
     }
 }
